@@ -1,63 +1,59 @@
 create table employees (
-	emp_no int PRIMARY KEY,
+	emp_no int NOT NULL,
 	birth_date date,
-	first_name character varying (50),
-	last_name character varying (50),
-	gender character varying (5),
-	hire_date date
+	first_name character varying (50) NOT NULL,
+	last_name character varying (50) NOT NULL,
+	gender character varying (5) NOT NULL, 
+	hire_date date,
+	CONSTRAINT pk_emp_no PRIMARY KEY (emp_no)
 );
 
 
 create table departments (
-	dept_no varchar PRIMARY KEY,
-	dept_name character varying (50)
+	dept_no varchar NOT NULL,
+	dept_name character varying (50) NOT NULL,
+	CONSTRAINT pk_dept_no PRIMARY KEY (dept_no)
 );
+
 
 create table dept_emp (
-	dept_emp_id SERIAL PRIMARY KEY,
-	emp_no int,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
-	dept_no varchar,
-	FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
+	emp_no int NOT NULL,
+	dept_no varchar NOT NULL,
 	from_date date,
-	to_date date
+	to_date date,
+	CONSTRAINT pk_emp_dept_no PRIMARY KEY (emp_no, dept_no)
 );
-
-BULK INSERT dept_emp
- FROM 'C:\Users\siris\Documents\UR-RICH-DATA-PT-01-2020-U-C\09-SQL\HW\Instructions\data\dept_emp.csv'
- WITH
- (
- FIELDTERMINATOR = ',',
- ROWTERMINATOR = '\n'
- )
 
 
 create table dept_manager (
-	dept_manager_id SERIAL PRIMARY KEY,
-	dept_no varchar,
-	FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
-	emp_no int,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
+	dept_no varchar NOT NULL,
+	emp_no int NOT NULL,
 	from_date date,
-	to_date date
+	to_date date, 
+	CONSTRAINT pk_emp_no_dept_manager PRIMARY KEY (emp_no),
+	FOREIGN KEY (dept_no) REFERENCES departments (dept_no)
 );
+
 
 create table salaries (
-	salary_id SERIAL PRIMARY KEY,
-	emp_no int,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
-	salary int,
+	emp_no int NOT NULL,
+	salary int NOT NULL,
 	from_date date,
-	to_date date
+	to_date date,
+	CONSTRAINT pk_emp_no_salaries PRIMARY KEY (emp_no)
 );
 
+
 create table titles (
-	title_id SERIAL PRIMARY KEY,
-	emp_no int,
-	title character varying (50),
+	emp_no int NOT NULL,
+	title character varying (50) NOT NULL,
 	from_date date,
-	to_date date
+	to_date date,
+	CONSTRAINT pk_emp_no_title_from_date PRIMARY KEY (emp_no, title, from_date)
 );
+
+
+
 
 
 
