@@ -1,3 +1,5 @@
+--Data Engineering: Table creation
+
 create table employees (
 	emp_no int NOT NULL,
 	birth_date date,
